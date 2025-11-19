@@ -1,0 +1,17 @@
+ruby_version: 3.3.0
+
+ignore:
+  - "vendor/**/*"
+  - "bin/**/*"
+  - "db/schema.rb"
+  - "node_modules/**/*"
+
+plugins:
+  - standard-custom
+  - standard-performance
+  - standard-rails
+
+# You can customize Standard's rules here
+rules:
+  layout/line_length:
+    max: 120
