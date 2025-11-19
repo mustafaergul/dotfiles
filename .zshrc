@@ -1,9 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init -)"
 
-# Add volta to $PATH
 export VOLTA_HOME=$HOME/.volta
 export VOLTA_FEATURE_PNPM=1
 export PATH=$HOME/.volta/bin:$PATH
@@ -14,7 +13,6 @@ export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$PATH:/Users/mergul/nvim-osx64/bin"
 
-# ZSH_THEME="awesomepanda" # set by `omz`
 source ~/.oh-my-zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
 
 # Add the bin folder to $PATH before the plugins load
@@ -29,12 +27,7 @@ plugins=(git rails ruby node rbenv zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='mvim'
-fi
+export EDITOR='vi'
 
 # Example aliases
 alias zshconfig="vi ~/.zshrc"
@@ -47,7 +40,7 @@ export TMUX_CONFIG="~/.config/tmux/.tmux/.tmux.conf"
 # TMUX aliases
 alias tn="tmux -u -f $TMUX_CONFIG new"
 alias ta="tmux -u -f $TMUX_CONFIG attach"
-#alias tt="nvim $TMUX_CONFIG"
+# alias tt="nvim $TMUX_CONFIG"
 
 # fzf vim setup
 if type rg &> /dev/null; then
@@ -84,3 +77,6 @@ prompt pure
 
 # autin setup
 eval "$(atuin init zsh)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/mergul/.lmstudio/bin"
