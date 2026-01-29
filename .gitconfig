@@ -40,3 +40,6 @@
 	colorMoved = plain
 	mnemonicPrefix = true
 	renames = true
+	tool = nvimdiff
+[merge]
+	tool = nvimdiff3

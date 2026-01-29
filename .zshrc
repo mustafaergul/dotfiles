@@ -80,3 +80,6 @@ eval "$(atuin init zsh)"
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/mergul/.lmstudio/bin"
+
+# opencode
+export PATH=/Users/mergul/.opencode/bin:$PATH
