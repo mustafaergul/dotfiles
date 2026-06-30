@@ -13,7 +13,7 @@ return {
 					statusline = { "NvimTree", "neo-tree", "avante" },
 				},
 				always_divide_middle = true,
-				theme = "catppuccin",
+				theme = "auto",
 				globalstatus = false,
 			},
 			sections = {

@@ -1,6 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPre", "BufNewFile" },
+	branch = "master", -- classic API (matches configs.setup below); main branch is the incompatible rewrite
 	build = ":TSUpdate",
 	dependencies = {
 		"windwp/nvim-ts-autotag",
@@ -9,6 +10,12 @@ return {
 		-- import nvim-treesitter plugin
 		local treesitter = require("nvim-treesitter.configs")
 
+		vim.filetype.add({
+			extension = {
+				gts = "typescript.glimmer",
+				gjs = "javascript.glimmer",
+			},
+		})
 		-- configure treesitter
 		treesitter.setup({
 			-- enable syntax highlighting
@@ -25,6 +32,7 @@ return {
 			-- ensure these language parsers are installed
 			ensure_installed = {
 				"ruby",
+				"glimmer",
 				"typescript",
 				"tsx",
 				"javascript",
@@ -37,12 +45,10 @@ return {
 				"json",
 				"markdown",
 				"markdown_inline",
-				"html",
 				"gitignore",
 				"dockerfile",
 				"graphql",
 				"css",
-				"html",
 				"yaml",
 			},
 			incremental_selection = {
@@ -54,15 +60,6 @@ return {
 					node_decremental = "<bs>",
 				},
 			},
-			-- Enable highlight when opening the file with file type
-			-- on_ft = function(ft)
-			-- 	vim.cmd("TSBufEnable")
-			-- end,
-			-- matchup = {
-			-- 	enable = true, -- mandatory, false will disable the whole extension
-			-- 	-- disable = { "c", "ruby" }, -- optional, list of language that will be disabled
-			-- 	-- [options]
-			-- },
 		})
 	end,
 }

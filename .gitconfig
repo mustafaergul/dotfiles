@@ -9,37 +9,7 @@
 	attributesfile = ~/.gitattributes
 	editor = nvim
 [user]
+	name = Mustafa Ergül
 	email = me@mergul.com
-	name = Mustafa Ergul
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 [push]
-	autoSetupRemote = true
-	default = simple
-[color]
-	ui = auto
-[i18n]
-	logOutputEncoding = utf-8
-	commitEncoding = utf-8
-[oh-my-zsh]
-	hide-info = 1
-	hide-status = 1
-	hide-dirty = 1
-[column]
-	ui = auto
-[branch]
-	sort = -committerdate
-[tag]
-	sort = version:refname
-[init]
-	defaultBranch = main
-[diff]
-	colorMoved = plain
-	mnemonicPrefix = true
-	renames = true
-	tool = nvimdiff
-[merge]
-	tool = nvimdiff3
+	useForceIfIncludes = true

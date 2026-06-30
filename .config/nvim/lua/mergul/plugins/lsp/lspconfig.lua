@@ -28,10 +28,10 @@ return {
 					-- "ruby_lsp", this causes duplicate
 					-- "standardrb",
 					"ts_ls",
+					"glint",
 					"tailwindcss",
 					"html",
 					"cssls",
-					"lua_ls",
 				},
 			})
 
@@ -39,7 +39,6 @@ return {
 			mason_tool_installer.setup({
 				ensure_installed = {
 					"prettier", -- prettier formatter
-					"stylua", -- lua formatter
 					"eslint_d", -- javascript/typescript linter
 					"standardrb", -- javascript/typescript linter
 				},
@@ -55,7 +54,6 @@ return {
 			{ "folke/neodev.nvim", opts = {} },
 		},
 		config = function()
-			local lspconfig = require("lspconfig")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			local keymap = vim.keymap
 
@@ -87,6 +85,19 @@ return {
 			local servers = {
 				ts_ls = {
 					capabilities = capabilities,
+					-- vim.lsp.config root_dir signature is (bufnr, on_dir); call on_dir with the resolved root.
+					root_dir = function(bufnr, on_dir)
+						local fname = vim.api.nvim_buf_get_name(bufnr)
+						local util = require("lspconfig.util")
+						-- Check for client/tsconfig.json first
+						local client_tsconfig = util.root_pattern("client/tsconfig.json")(fname)
+						if client_tsconfig then
+							on_dir(client_tsconfig .. "/client")
+							return
+						end
+						-- Fall back to default behavior
+						on_dir(util.root_pattern("package.json", "tsconfig.json", ".git")(fname))
+					end,
 					init_options = {
 						preferences = {
 							disableSuggestions = true, -- kills suggestion diagnostics
@@ -98,6 +109,22 @@ return {
 					handlers = {
 						["textDocument/publishDiagnostics"] = function() end, -- ← FULLY DISABLES LSP DIAGNOSTICS
 					},
+				},
+				glint = {
+					capabilities = capabilities,
+					-- Volar-based glint (@glint/ember-tsc 1.6+) requires an explicit
+					-- transport flag; lspconfig's default cmd omits it, so the server
+					-- crashes with "Connection input stream is not set".
+					cmd = function(dispatchers, config)
+						local cmd = "glint-language-server"
+						if config and config.root_dir then
+							local local_cmd = vim.fs.joinpath(config.root_dir, "node_modules/.bin", cmd)
+							if vim.fn.executable(local_cmd) == 1 then
+								cmd = local_cmd
+							end
+						end
+						return vim.lsp.rpc.start({ cmd, "--stdio" }, dispatchers)
+					end,
 				},
 				ruby_lsp = {
 					cmd = { "/Users/mergul/.rbenv/shims/ruby-lsp" },
@@ -117,11 +144,13 @@ return {
 				},
 			}
 
-			-- Apply server configurations
+			-- Apply server configurations via the native vim.lsp.config API (nvim 0.11+).
+			-- vim.lsp.config merges over nvim-lspconfig's bundled lsp/<server>.lua base.
 			for server, config in pairs(servers) do
-				lspconfig[server].setup(vim.tbl_extend("force", {
+				vim.lsp.config(server, vim.tbl_extend("force", {
 					capabilities = capabilities,
 				}, config))
+				vim.lsp.enable(server)
 			end
 		end,
 	},

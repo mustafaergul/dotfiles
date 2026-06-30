@@ -1,85 +1,113 @@
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+##### PATH / ENV #####
+
+# Base paths
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
+
+# Homebrew PostgreSQL
+export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
+
+# Neovim
+export PATH="$HOME/nvim-osx64/bin:$PATH"
+
+# rbenv
 export PATH="$HOME/.rbenv/shims:$PATH"
 eval "$(rbenv init -)"
 
-export VOLTA_HOME=$HOME/.volta
+# Volta
+export VOLTA_HOME="$HOME/.volta"
 export VOLTA_FEATURE_PNPM=1
-export PATH=$HOME/.volta/bin:$PATH
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+# Misc tools
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# macOS fork safety
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-export PATH="/opt/homebrew/opt/postgresql@16/bin:$PATH"
 
-# Path to your oh-my-zsh installation.
+
+##### OH MY ZSH #####
+
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$PATH:/Users/mergul/nvim-osx64/bin"
 
-source ~/.oh-my-zsh/catppuccin_mocha-zsh-syntax-highlighting.zsh
+# Plugins (only ones actually used)
+plugins=(
+  git
+  rails
+  ruby
+  node
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+)
 
-# Add the bin folder to $PATH before the plugins load
-PATH=$HOME/.local/bin:$PATH
+# OMZ update reminder
+zstyle ':omz:update' mode reminder
 
-# Uncomment the following line to use case-sensitive completion.
+# Case-sensitive completion (you explicitly enabled this)
 CASE_SENSITIVE="true"
 
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+# Load Oh My Zsh
+source "$ZSH/oh-my-zsh.sh"
 
-plugins=(git rails ruby node rbenv zsh-autosuggestions zsh-syntax-highlighting)
 
-source $ZSH/oh-my-zsh.sh
+##### SYNTAX HIGHLIGHTING THEME #####
+# (keep this since you explicitly use Catppuccin)
+# source "$ZSH/catppuccin_mocha-zsh-syntax-highlighting.zsh"
 
-export EDITOR='vi'
 
-# Example aliases
-alias zshconfig="vi ~/.zshrc"
-alias ohmyzsh="vi ~/.oh-my-zsh"
-alias lg="lazygit"
+##### EDITOR #####
 
-# Export TMUX config file
-export TMUX_CONFIG="~/.config/tmux/.tmux/.tmux.conf"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
-# TMUX aliases
-alias tn="tmux -u -f $TMUX_CONFIG new"
-alias ta="tmux -u -f $TMUX_CONFIG attach"
-# alias tt="nvim $TMUX_CONFIG"
+##### ALIASES #####
 
-# fzf vim setup
-if type rg &> /dev/null; then
-  export FZF_DEFAULT_COMMAND='rg --files'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
-fi
-
-# default vim command to nvim command
 alias vim="nvim"
 alias vi="nvim"
 alias mvim="nvim"
 
-# remove duplicate entires from $PATH
-deduplicate_path() {
-  # Convert PATH to a list with newline-separated entries
-  local old_path=$PATH
-  local new_path=$(echo "$old_path" | tr ':' '\n' | awk '!seen[$0]++' | tr '\n' ':' | sed 's/:$//')
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias lg="lazygit"
 
-  # Export the deduplicated PATH
-  export PATH=$new_path
-}
-# Call the function
-deduplicate_path
+alias cat='bat --paging=never'
 
-# this is needed for the zsh-syntax-highlighting
-source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+##### TMUX #####
 
-# pure prompter
-# zstyle :prompt:pure:path color '#FF0000'
-zstyle :prompt:pure:execution_time show no
+export TMUX_CONFIG="$HOME/.config/tmux/.tmux/.tmux.conf"
+alias tn="tmux -u -f $TMUX_CONFIG new"
+alias ta="tmux -u -f $TMUX_CONFIG attach"
+
+
+##### FZF #####
+
+if command -v rg >/dev/null; then
+  export FZF_DEFAULT_COMMAND="rg --files"
+  export FZF_DEFAULT_OPTS="-m --height 50% --border"
+fi
+
+
+##### PURE PROMPT #####
+
+# Homebrew-installed Pure
 fpath+=("$(brew --prefix)/share/zsh/site-functions")
-autoload -U promptinit; promptinit
-prompt pure
 
-# autin setup
+autoload -Uz prompt_pure_setup
+prompt_pure_setup
+
+zstyle :prompt:pure:execution_time show no
+
+
+##### ATUIN #####
+
 eval "$(atuin init zsh)"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/mergul/.lmstudio/bin"
+# bun completions
+[ -s "/Users/mergul/.bun/_bun" ] && source "/Users/mergul/.bun/_bun"
 
-# opencode
-export PATH=/Users/mergul/.opencode/bin:$PATH
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+export DD_SITE=datadoghq.eu
+
+# Sync dotfiles to remote (stow model: edits live in repo via symlink)
+alias dotpush='cd ~/Projects/dotfiles && git add -A && git commit -m "update dotfiles" && git push'

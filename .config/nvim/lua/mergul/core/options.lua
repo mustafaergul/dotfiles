@@ -10,8 +10,8 @@ opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 opt.undofile = true
 opt.termguicolors = true
 
--- Syntax highlighting on
-vim.cmd("syntax on")
+-- Syntax highlighting handled by treesitter
+-- vim.cmd("syntax on")
 vim.cmd("set nocompatible")
 
 -- Set language this is must for yanking in UTF format
@@ -19,9 +19,8 @@ vim.cmd("language en_US.UTF-8")
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
---
--- Set terminal color support to 256 colors
--- vim.opt.t_Co = 256
+
+vim.opt.winborder = "rounded"
 
 -- Set encoding to UTF-8
 vim.opt.encoding = "utf-8"
@@ -52,10 +51,9 @@ vim.opt.softtabstop = 4
 -- Disable displaying invisible characters
 vim.opt.list = true
 
--- Set fold level and method using treesitter
+-- Set fold level and method using syntax
 vim.opt.foldlevel = 20
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "syntax"
 
 -- Enable copying indent from previous line
 vim.opt.copyindent = true

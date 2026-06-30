@@ -13,7 +13,9 @@ end)
 config.check_for_updates = true
 config.check_for_updates_interval_seconds = 86400
 
-config.color_scheme = "Catppuccin Mocha"
+-- config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "rose-pine-moon"
+config.window_background_opacity = 0.88
 config.font = wezterm.font("JetBrains Mono", { weight = "Bold", italic = false })
 config.font_size = 16
 

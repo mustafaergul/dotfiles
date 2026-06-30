@@ -1,0 +1,12 @@
+\.git
+\.gitignore
+\.DS_Store
+\.stow-local-ignore
+README.md
+LICENSE
+install.sh
+sync.sh
+migrate-to-stow.sh
+# stale/empty placeholders not used on this machine
+\.bashrc
+\.vimrc
