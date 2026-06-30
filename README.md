@@ -57,10 +57,3 @@ stow -D -t ~ .       # remove the symlinks
 ```
 
 Then copy the files back from the repo (or a backup) if you want real files again.
-
-## Notes
-
-- `migrate-to-stow.sh` — one-time script that converted this setup from copies to
-  Stow symlinks (kept for reference).
-- `sync.sh` — legacy copy-based sync; redundant under the Stow model.
-- `install.sh` — old bootstrap script (outdated).
