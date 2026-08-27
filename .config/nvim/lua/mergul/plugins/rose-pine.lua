@@ -5,6 +5,11 @@ return {
 	config = function()
 		require("rose-pine").setup({
 			disable_background = true,
+			highlight_groups = {
+				-- brighter visual selection (default highlight_med is too dim on transparent bg)
+				Visual = { bg = "highlight_high", inherit = false },
+				VisualNOS = { bg = "highlight_high", inherit = false },
+			},
 		})
 
 		local function ColorMyPencils(color)
