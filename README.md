@@ -14,6 +14,7 @@ a symlink), so syncing to the remote is just a `git push`.
 | `.config/nvim` | Neovim (lazy.nvim) |
 | `.config/aerospace` | AeroSpace window manager |
 | `.config/atuin` | Atuin shell history |
+| `.config/herdr/config.toml` | Herdr terminal multiplexer (config only; logs/session state stay local) |
 | `.config/tmux` | tmux |
 
 ## Install on a new machine
