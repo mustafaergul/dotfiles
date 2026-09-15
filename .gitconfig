@@ -13,3 +13,5 @@
 	email = me@mergul.com
 [push]
 	useForceIfIncludes = true
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials

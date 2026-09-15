@@ -33,6 +33,7 @@ return {
 						["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
 						["<C-t>"] = trouble_telescope.open,
 						["<C-d>"] = "delete_buffer",
+						["<esc>"] = actions.close,
 						-- ["<C-l>"] = actions.preview_scrolling_left,
 					},
 				},
