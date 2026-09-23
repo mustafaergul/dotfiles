@@ -66,6 +66,7 @@ alias vi="nvim"
 alias mvim="nvim"
 
 alias zshconfig="nvim ~/.zshrc"
+alias cfg="cd ~/.config"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias lg="lazygit"
 
