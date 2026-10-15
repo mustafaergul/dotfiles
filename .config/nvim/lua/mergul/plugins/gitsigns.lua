@@ -60,5 +60,18 @@ return {
 				map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 			end,
 		})
+
+		-- Line blame waits for 1s of quiet on a single shared timer. Fidget's LSP
+		-- progress popup fires WinResized for its own buffer, which replaces the
+		-- pending update for the file and the blame never appears while an LSP is
+		-- busy. Ignore update requests for buffers other than the current one.
+		local blame = require("gitsigns.current_line_blame")
+		local update = blame.update
+		blame.update = function(bufnr)
+			if bufnr ~= vim.api.nvim_get_current_buf() then
+				return
+			end
+			return update(bufnr)
+		end
 	end,
 }

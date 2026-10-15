@@ -67,6 +67,8 @@ alias mvim="nvim"
 
 alias zshconfig="nvim ~/.zshrc"
 alias cfg="cd ~/.config"
+alias ttm="cd ~/Teamtailor/teamtailor"
+alias tti="cd ~/Teamtailor/tt-importer"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias lg="lazygit"
 

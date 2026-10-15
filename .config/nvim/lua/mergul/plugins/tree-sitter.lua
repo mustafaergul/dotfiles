@@ -61,5 +61,8 @@ return {
 				},
 			},
 		})
+
+		-- Fix master-branch query helpers for Neovim 0.12 (see the module for details).
+		require("mergul.treesitter_compat")
 	end,
 }

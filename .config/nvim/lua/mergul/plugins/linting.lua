@@ -12,7 +12,8 @@ return {
 			typescript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
-			ruby = { "standardrb" },
+			-- ruby: handled live by ruby_lsp (Standard addon, pull diagnostics); running
+			-- standardrb here too only duplicated every offense on save/InsertLeave.
 			lua = { "luacheck" },
 		}
 

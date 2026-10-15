@@ -24,6 +24,10 @@ return {
 
 			-- Ensure LSP servers are installed
 			mason_lspconfig.setup({
+				-- mason-lspconfig v2 auto-enables every installed server. standardrb is
+				-- installed as a formatter (mason-tool-installer) and must not also run
+				-- as an LSP: its diagnostics are muted globally and duplicate ruby_lsp.
+				automatic_enable = { exclude = { "standardrb" } },
 				ensure_installed = {
 					-- "ruby_lsp", this causes duplicate
 					-- "standardrb",
@@ -125,6 +129,20 @@ return {
 						end
 						return vim.lsp.rpc.start({ cmd, "--stdio" }, dispatchers)
 					end,
+				},
+				-- C/C/C++/Objective-C. Uses Apple's clangd from Xcode (/usr/bin/clangd),
+				-- which knows the macOS SDK, rather than a generic Mason/LLVM build.
+				clangd = {
+					cmd = {
+						"clangd",
+						"--background-index", -- index the whole project for gd/gr across files
+						"--clang-tidy", -- extra lint diagnostics
+						"--completion-style=detailed",
+					},
+					-- options.lua mutes publishDiagnostics for all servers; opt clangd back in.
+					handlers = {
+						["textDocument/publishDiagnostics"] = vim.lsp.diagnostic.on_publish_diagnostics,
+					},
 				},
 				ruby_lsp = {
 					cmd = { "/Users/mergul/.rbenv/shims/ruby-lsp" },
