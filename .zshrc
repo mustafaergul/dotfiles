@@ -70,7 +70,7 @@ alias cfg="cd ~/.config"
 alias ttm="cd ~/Teamtailor/teamtailor"
 alias tti="cd ~/Teamtailor/tt-importer"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
-alias lg="lazygit"
+# alias lg="lazygit"  # replaced by the lg() function at the end of this file
 
 alias cat='bat --paging=never'
 
@@ -114,3 +114,14 @@ export DD_SITE=datadoghq.eu
 
 # Sync dotfiles to remote (stow model: edits live in repo via symlink)
 alias dotpush='cd ~/Projects/dotfiles && git add -A && git commit -m "update dotfiles" && git push'
+
+# lazygit: cd into the repo or worktree lazygit was in when it quit
+unalias lg 2>/dev/null
+function lg {
+  export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+  lazygit "$@"
+  if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+    cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+    rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+  fi
+}
